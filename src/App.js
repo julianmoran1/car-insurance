@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+
+import { useState } from 'react';
+import Header from './components/Header';
+import Form from './components/Form';
+import Results from './components/Results';
+import styled from '@emotion/styled';
 import './App.css';
+import Spinner from './components/Spinner';
+
+const Container = styled.div`
+max-width: 600px;
+margin: 0 auto;
+`;
+
+const FormContainer = styled.div`
+background-color: #FFF;
+padding: 3rem;
+`;
 
 function App() {
+
+  const [summary, setSummary] = useState({ show:false})
+  const [loading, setLoading] = useState(false)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Header title="Car insurance budgeting tool" />
+      <FormContainer>
+        <Form setSummary={setSummary} setLoading={setLoading} />
+        {summary.show === true && <Results summary={summary}  />}
+        {loading ? <Spinner /> : null}
+        
+      </FormContainer>
+    </Container>
   );
 }
 
